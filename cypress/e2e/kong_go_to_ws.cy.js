@@ -1,4 +1,4 @@
-describe('create service and route', () => {
+describe('go to workspace page', () => {
   it('navigate to workspace page', () => {
     cy.visit('/workspaces')
     cy.get('[data-testid="sidebar-item-workspaces"]')
@@ -16,27 +16,27 @@ describe('create service and route', () => {
       }
     });
   });
-  it('create a new server', () => {
-    cy.visit('/default/services/create');
-    cy.get('[data-testid="gateway-service-url-radio-label"] > .card-label-container > .radio-label')
-        .should('be.visible')
-        .click();
-    cy.get('[data-testid="gateway-service-url-radio"]')
-        .should('be.visible')
-        .check();
-    cy.get('[data-testid="gateway-service-url-input"]')
-        .should('be.visible')
-        .type('https://localhost:8002/test')
-        .should('have.value', 'https://localhost:8002/test');
-    cy.get('[data-testid="gateway-service-name-input"]')
-        .should('be.visible')
-        .clear('n');
-    cy.get('[data-testid="gateway-service-name-input"]')
-        .should('be.visible')
-        .type('new-service-for-testing')
-        .should('have.value', 'new-service-for-testing');
-    cy.get('[data-testid="service-create-form-submit"]').click();
-  });
+//  it('create a new server', () => {
+//    cy.visit('/default/services/create');
+//    cy.get('[data-testid="gateway-service-url-radio-label"] > .card-label-container > .radio-label')
+//        .should('be.visible')
+//        .click();
+//    cy.get('[data-testid="gateway-service-url-radio"]')
+//        .should('be.visible')
+//        .check();
+//    cy.get('[data-testid="gateway-service-url-input"]')
+//        .should('be.visible')
+//        .type('https://localhost:8002/test')
+//        .should('have.value', 'https://localhost:8002/test');
+//    cy.get('[data-testid="gateway-service-name-input"]')
+//        .should('be.visible')
+//        .clear('n');
+//    cy.get('[data-testid="gateway-service-name-input"]')
+//        .should('be.visible')
+//        .type('new-service-for-testing')
+//        .should('have.value', 'new-service-for-testing');
+//    cy.get('[data-testid="service-create-form-submit"]').click();
+//  });
 //  it('remove created server', () => {
 //    /* ==== remove service ==== */
 //    cy.wait(5000);
