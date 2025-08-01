@@ -4,14 +4,14 @@
   "description": "Run Cypress tests against Kong Gateway UI using Docker Compose",
   "main": "index.js",
   "scripts": {
-    "start:docker": "docker compose -f docker-compose.test.yml up -d",
-    "stop:docker": "docker compose -f docker-compose.test.yml down",
+    "start:docker": "docker compose -f docker-compose.yml up -d",
+    "stop:docker": "docker compose -f docker-compose.yml down",
     "wait": "wait-on http://localhost:8002",
     "test": "npm run start:docker && npm run wait && cypress run && npm run stop:docker"
   },
   "devDependencies": {
     "cypress": "^14.5.0",
-    "wait-on": "^7.0.1"
+    "wait-on": "^7.2.0"
   },
   "keywords": [
     "cypress",
