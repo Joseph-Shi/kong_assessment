@@ -37,7 +37,7 @@ jobs:
 #        run: npm ci
 
       - name: Start containers using docker-compose
-        run:  docker-compose up -d
+        run:  docker compose -f docker-compose.yml up -d
 
       - name: Wait for services to be ready
         run: |
