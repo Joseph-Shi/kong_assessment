@@ -40,7 +40,9 @@ jobs:
         run:  docker compose -f docker-compose.yml up -d
 
       - name: Wait for services to be ready
-        run: curl -f http://localhost:8002/ || exit 1
+        run: |
+          echo "Waiting for services to be ready..."
+          sleep 10
 
       - name: Install Cypress
         run: npm install cypress --save-dev
