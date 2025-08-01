@@ -44,6 +44,9 @@ jobs:
           echo "Waiting for services to be ready..."
           sleep 20  # 或者你可以使用 curl 检查 readiness，比如：curl -f http://localhost:8002/ || exit 1
 
+      - name: Install Cypress
+        run: npm install cypress --save-dev
+
       - name: Run Cypress tests
         run: npx cypress run
 
