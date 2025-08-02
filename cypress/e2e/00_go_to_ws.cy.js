@@ -20,3 +20,4 @@ describe('go to workspace page', () => {
       }
     });
   });
+});
