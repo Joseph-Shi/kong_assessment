@@ -1,0 +1,8 @@
+{
+  "serviceName": "test_service",
+  "serviceUrl": "http://httpbin.konghq.com",
+  "serviceUrl_validate": "httpbin.konghq.com",
+  "routeName": "test_route",
+  "routePath": "/api/v1",
+  "methods": ["GET", "PUT", "POST", "PATCH", "DELETE"]
+}

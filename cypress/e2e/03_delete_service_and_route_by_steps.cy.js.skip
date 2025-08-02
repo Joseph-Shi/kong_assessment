@@ -1,0 +1,44 @@
+describe('Create and delete service and route', () => {
+  let testData;
+
+  before(() => {
+    cy.fixture('serviceRoute').then((data) => {
+      testData = data;
+    });
+    cy.viewport(1920, 900);
+    cy.visit('/workspaces');
+  });
+
+  it('conditionally delete service if count > 0', () => {
+    cy.get('[data-testid="Services"]')
+      .find('.metric-value-text')
+      .invoke('text')
+      .then((text) => {
+        const serviceCount = parseInt(text.trim(), 10);
+        if (serviceCount > 0) {
+          // check if linked route exists, if so, delete the linked route first
+          // TODO: add foreach loop to delete all linked routes
+          cy.get('[data-testid="workspace-link-default"]').click();
+          cy.get('[data-testid="sidebar-item-gateway-services"]').click();
+          cy.get('[data-testid="${testData.serviceName}"]').click();
+          cy.get('[data-testid="service-routes"]').click();
+          cy.get('[data-testid="row-actions-dropdown-trigger"]').click();
+          cy.get('[data-testid="action-entity-delete"]').click();
+          cy.get('[data-testid="confirmation-input"]').clear().type(testData.routeName);
+          cy.get('[data-testid="modal-action-button"]').click();
+          // service exist, delete it
+          // TODO: add foreach loop to delete all services
+          cy.log(`There are ${serviceCount} services, proceeding to delete...`);
+//          cy.get('[data-testid="workspace-link-default"]').click();
+          cy.get('[data-testid="sidebar-item-gateway-services"]').click();
+          cy.get('[data-testid="row-actions-dropdown-trigger"]').click();
+          cy.get('[data-testid="action-entity-delete"]').click();
+          cy.get('[data-testid="confirmation-input"]').clear().type(testData.serviceName);
+          cy.get('[data-testid="modal-action-button"]').click();
+        } else {
+          // no service, skip deleting
+          cy.log('No services to delete, skipping.');
+        }
+      });
+  });
+
