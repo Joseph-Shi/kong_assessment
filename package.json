@@ -10,6 +10,9 @@
     "test": "npm run start:docker && npm run wait && cypress run && npm run stop:docker"
   },
   "devDependencies": {
+    "@shelex/cypress-allure-plugin": "*",
+    "allure-commandline": "*",
+    "cypress-mochawesome-reporter": "*",
     "cypress": "^14.5.0",
     "wait-on": "^7.2.0"
   },
@@ -19,6 +22,6 @@
     "kong",
     "e2e"
   ],
-  "author": "Your Name",
+  "author": "Joseph Shi",
   "license": "MIT"
 }

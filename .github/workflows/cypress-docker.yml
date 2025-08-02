@@ -12,7 +12,7 @@ jobs:
 
     services:
       docker:
-        image: docker:24.0.2-cli  # 确保 Docker CLI 可用
+        image: docker:24.0.2-cli
         options: --privileged
 
     steps:
@@ -22,9 +22,6 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
 
-      - name: check Docker install
-        run: docker -v
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -33,19 +30,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-#      - name: Install wait-on
-#        run: npm install --save-dev wait-on
-
-      - name: Start containers using docker-compose
+      - name: Start test environment using docker-compose file
         run:  docker compose -f docker-compose.yml up -d
 
       - name: Wait for services to be ready
         run: |
           echo "Waiting for services to be ready..."
           npx wait-on http://localhost:8002
-
-#      - name: Install Cypress
-#        run: npm install cypress --save-dev wait-on
 
       - name: Run Cypress tests
         run: npx cypress run
