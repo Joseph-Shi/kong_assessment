@@ -1,5 +1,5 @@
-// Case Id: TC003
-// Case Name: User can create service
+// Case Id: TC001
+// Case Name: User can create service and route
 // Precondition: Kong UI is running, workspace is opened, default workspace is ready and no service and route created
 // Steps：
 //  1. Navigate to workspace

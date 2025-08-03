@@ -94,3 +94,94 @@ Cypress.Commands.add('createRoute', (service_name, routeName, routePath, methods
       .should('exist');
   });
 });
+
+Cypress.Commands.add('deleteService', (service_name, serviceUrl, serviceUrl_validate) => {
+  cy.get('[data-testid="sidebar-item-gateway-services"]').click();
+  cy.wait(2000);
+  cy.get('body').then($body => {
+    // check if there is no service created
+    if ($body.find('[data-testid="empty-state-action"]').length > 0) {
+      cy.get('[data-testid="empty-state-action"]').click();
+    // check if there is already services created
+    } else if ($body.find('[data-testid="toolbar-add-gateway-service"]').length > 0) {
+      cy.get('[data-testid="toolbar-add-gateway-service"]').click();
+    } else {
+      throw new Error('No action button found to add service');
+      }
+  });
+  cy.get('[data-testid="gateway-service-url-radio-label"]').click();
+  cy.get('[data-testid="gateway-service-url-radio"]').check();
+  cy.get('[data-testid="gateway-service-url-input"]').type(serviceUrl);
+  cy.get('[data-testid="gateway-service-name-input"]').clear().type(service_name);
+  cy.get('[data-testid="service-create-form-submit"]').click();
+  // verify newly created service name and host value are as expected
+  cy.get('[data-testid="name-plain-text"]')
+    .should('be.visible')
+    .and('contain.text', service_name);
+  cy.get('[data-testid="host-plain-text"]')
+    .should('be.visible')
+    .and('contain.text', serviceUrl_validate);
+});
+
+
+Cypress.Commands.add('deleteAllRoutes', (workspace) => {
+  cy.visit('/default/routes');
+  cy.get('body').then(($body) => {
+    const triggers = $body.find('[data-testid="row-actions-dropdown-trigger"]');
+    if (triggers.length === 0) {
+      cy.log('No routes to delete');
+      return;
+    }
+    cy.get('[data-testid="row-actions-dropdown-trigger"]').each(($el, index, $list) => {
+    cy.wrap($el).click();
+    cy.get('body').then($body => {
+      const $dropdown = $body.find('[data-testid="action-entity-delete"]');
+      if ($dropdown.length === 1) {
+        cy.wrap($dropdown).click();
+      } else if ($dropdown.length > 1) {
+        cy.wrap($dropdown.eq(0)).click();
+      } else {
+        throw new Error('No delete button found');
+      }
+    });
+    cy.get('.confirmation-text')
+      .invoke('text')
+      .then((confirmationText) => {
+        const text = confirmationText.replace(/['"]/g, '').trim();
+        cy.get('[data-testid="confirmation-input"]').type(text);
+        cy.get('[data-testid="modal-action-button"]').click();
+      });
+    });
+  });
+});
+
+Cypress.Commands.add('deleteAllServices', (workspace) => {
+  cy.visit('/default/services');
+  cy.get('body').then(($body) => {
+    const triggers = $body.find('[data-testid="row-actions-dropdown-trigger"]');
+    if (triggers.length === 0) {
+      cy.log('No service to delete');
+      return;
+    }
+    cy.get('[data-testid="row-actions-dropdown-trigger"]').each(($el, index, $list) => {
+    cy.wrap($el).click();
+    cy.get('body').then($body => {
+      const $dropdown = $body.find('[data-testid="action-entity-delete"]');
+      if ($dropdown.length === 1) {
+        cy.wrap($dropdown).click();
+      } else if ($dropdown.length > 1) {
+        cy.wrap($dropdown.eq(0)).click();
+      } else {
+        throw new Error('No delete button found');
+      }
+    });
+    cy.get('.confirmation-text')
+      .invoke('text')
+      .then((confirmationText) => {
+        const text = confirmationText.replace(/['"]/g, '').trim();
+        cy.get('[data-testid="confirmation-input"]').type(text);
+        cy.get('[data-testid="modal-action-button"]').click();
+      });
+    });
+  });
+});
