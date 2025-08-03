@@ -1,0 +1,134 @@
+- id: TC001
+  title: Successfully create a Service
+  type: Functional Test
+  preconditions:
+    - Logged into the system
+    - Currently in the "default workspace"
+  steps:
+    - Click the "Create Service" button
+    - Enter a valid service name and URL
+    - Click the "Save" button
+  expected: A message "Service created successfully" appears, and the new service is listed
+
+- id: TC002
+  title: Delete a Service (no associated Routes)
+  type: Functional Test
+  preconditions:
+    - A service exists with no associated routes
+  steps:
+    - Click the delete button next to the service
+    - Confirm the deletion
+  expected: A message "Service deleted successfully" appears, and the service is removed from the list
+
+- id: TC003
+  title: Successfully create a Route (with existing Service)
+  type: Functional Test
+  preconditions:
+    - At least one service exists
+  steps:
+    - Go to the service detail page
+    - Click the "Add a Route" button
+    - Enter a route name and path
+    - Click Save
+  expected: A message "Route created successfully" appears, and the route is shown under the service
+
+- id: TC004
+  title: Successfully delete a Route
+  type: Functional Test
+  preconditions:
+    - A service has at least one associated route
+  steps:
+    - Click the delete button for the route
+    - Confirm deletion
+  expected: A message "Route deleted successfully" appears, and the route is removed from the list
+
+- id: TC006
+  title: Fail to delete Service with associated Routes
+  type: Negative Test
+  preconditions:
+    - A service has at least one route
+  steps:
+    - Click the delete button for the service
+  expected: A message "an existing 'routes' entity references this 'services' entity" appears, deletion is blocked
+
+- id: TC007
+  title: Create multiple Services and verify UI behavior
+  type: Boundary Test
+  preconditions:
+    - Few or no services exist in the current workspace
+  steps:
+    - Create 10 different services with unique names
+  expected: All services are displayed properly without UI glitches or overlap
+
+- id: TC008
+  title: Duplicate Route path handling
+  type: Boundary Test
+  preconditions:
+    - A service already has a route with path `/api/v1`
+  steps:
+    - Try to add another route with the same path `/api/v1`
+  expected: An error message "Route path must be unique" appears, creation is blocked
+
+- id: TC009
+  title: XSS Security Test (malicious script input)
+  type: Security Test
+  preconditions:
+    - User is logged in
+  steps:
+    - Attempt to create a service with the name `<script>alert('xss')</script>`
+  expected: The script should not execute; input is sanitized or rejected with an error
+
+- id: TC010
+  title: SQL Injection Test (malicious input)
+  type: Security Test
+  preconditions:
+    - User is logged in
+  steps:
+    - Attempt to input `' OR 1=1 --` in the route path field
+  expected: The input is rejected; no SQL or logic vulnerability is triggered
+
+- id: TC011
+  title: Performance Test - Create 50 Services
+  type: Performance Test
+  preconditions:
+    - Logged in, default workspace selected
+  steps:
+    - Use a script or tool to create 50 different services
+  expected: All services are displayed, UI remains responsive, page loads within 2 seconds
+
+- id: TC012
+  title: Performance Test - Add 100 Routes to one Service
+  type: Performance Test
+  preconditions:
+    - One service exists
+  steps:
+    - Programmatically add 100 unique routes to that service
+  expected: All routes are displayed correctly, UI remains functional, no crashes or slowdowns
+
+- id: TC013
+  title: Concurrency Test - Multiple users creating Services simultaneously
+  type: Stress Test
+  preconditions:
+    - Two or more users logged into the same workspace
+  steps:
+    - Simultaneously create services with different names from different users
+  expected: No conflicts or data loss, all services are created successfully
+
+- id: TC014
+  title: UI Permission Check (Non-admin user)
+  type: Security Test
+  preconditions:
+    - User is logged in with read-only or restricted role
+  steps:
+    - Attempt to click "Create Service" or "Delete Route" buttons
+  expected: All create/delete buttons are disabled or hidden, unauthorized actions are blocked
+
+- id: TC015
+  title: Input Validation - Invalid URL format for Service
+  type: Input Validation Test
+  preconditions:
+    - User is creating a new service
+  steps:
+    - Input an invalid URL such as `htp:/test` in the URL field
+    - Click Save
+  expected: An error message "The URL must follow a valid format." appears, service is not created

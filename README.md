@@ -20,12 +20,13 @@ This Project is build based on [Cypress](https://www.cypress.io/) + [Allure Repo
 cypress-kong-ui-test/
 ├── cypress/
 │   └── e2e/
-│       └── kong_create_service_and_route.cy.js  # main workflow
-│       └── kong_go_to_ws.cy.js  # assist workflow
-├── cypress.config.js                        # Cypress config file
-├── docker-compose.yml                       # Kong local test environment
-├── package.json                             # prohect dependecy and script
-└── README.md
+│       └── 01_create_service_and_route.cy.js       # main workflow
+│   └── testcases/
+│       └── case_create_service.js                  # testcase data
+├── cypress.config.js                               # Cypress config file
+├── docker-compose.yml                              # Kong local test environment
+├── package.json                                    # project dependecy and script
+└── README.md                                       # project description
 ```
 
 ---
