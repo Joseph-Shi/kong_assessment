@@ -52,6 +52,7 @@ Cypress.Commands.add('createService', (service_name, serviceUrl, serviceUrl_vali
     .should('be.visible')
     .and('contain.text', service_name);
   cy.get('[data-testid="host-plain-text"]')
+    .scrollIntoView()
     .should('be.visible')
     .and('contain.text', serviceUrl_validate);
 });
