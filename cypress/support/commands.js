@@ -23,9 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('selectGatewayUrlRadio', () => {
-  cy.get('[data-testid="gateway-service-url-radio-label"] > .card-label-container > .radio-label').click();
-  cy.get('[data-testid="gateway-service-url-radio"]').check();
+Cypress.Commands.add('go_to_default_workspace', () => {
+  cy.visit('/workspaces');
+  cy.get('[data-testid="workspace-link-default"]').click();
 });
 
 Cypress.Commands.add('createService', (service_name, serviceUrl, serviceUrl_validate) => {
@@ -127,6 +127,7 @@ Cypress.Commands.add('deleteService', (service_name, serviceUrl, serviceUrl_vali
 
 Cypress.Commands.add('deleteAllRoutes', (workspace) => {
   cy.visit('/default/routes');
+  cy.wait(2000);
   cy.get('body').then(($body) => {
     const triggers = $body.find('[data-testid="row-actions-dropdown-trigger"]');
     if (triggers.length === 0) {
@@ -158,6 +159,7 @@ Cypress.Commands.add('deleteAllRoutes', (workspace) => {
 
 Cypress.Commands.add('deleteAllServices', (workspace) => {
   cy.visit('/default/services');
+  cy.wait(2000);
   cy.get('body').then(($body) => {
     const triggers = $body.find('[data-testid="row-actions-dropdown-trigger"]');
     if (triggers.length === 0) {

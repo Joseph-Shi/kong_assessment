@@ -3,9 +3,8 @@ const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 
 module.exports = defineConfig({
   e2e: {
-    // baseUrl: "http://localhost:3000",
-//    viewportWidth: 1920,
-//    viewportHeight: 900,
+    viewportWidth: 1920,
+    viewportHeight: 1080,
     baseUrl: "http://localhost:8002",
     experimentalStudio: true,
     setupNodeEvents(on, config) {

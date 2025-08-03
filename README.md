@@ -20,7 +20,8 @@ This Project is build based on [Cypress](https://www.cypress.io/) + [Allure Repo
 cypress-kong-ui-test/
 ├── cypress/
 │   └── e2e/
-│       └── 01_create_service_and_route.cy.js       # main workflow
+│       └── 01_create_service_and_route.cy.js       # main workflow to create route and service
+│       └── 02_delete_service_and_route.cy.js       # main workflow to delete route and service
 │   └── testcases/
 │       └── case_create_service.js                  # testcase data
 ├── cypress.config.js                               # Cypress config file
